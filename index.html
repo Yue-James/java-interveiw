@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目演示脚本 - 音乐播放列表管理器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
+            background-color: #f8fafc;
+        }
+        .terminal {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            font-family: 'SF Mono', 'Courier New', 'monospace';
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .terminal-yellow { color: #facc15; }
+        .terminal-green { color: #4ade80; }
+        .user-input {
+            display: inline-flex;
+            align-items: center;
+            background-color: #334155;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-style: italic;
+        }
+        .tab-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: 600;
+        }
+        .code-block {
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'SF Mono', 'Courier New', 'monospace';
+            font-size: 0.8rem;
+            overflow-x: auto;
+        }
+         .code-block .keyword { color: #be185d; font-weight: 500;}
+         .code-block .comment { color: #475569; }
+         .code-block .string { color: #059669; }
+         .code-block .class-name { color: #2563eb; }
+         .code-block .method-name { color: #7c3aed; }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">音乐播放列表管理器</h1>
+            <p class="text-lg text-gray-600 mt-2">项目功能详细演示脚本</p>
+        </header>
+
+        <div class="space-y-8">
+            <!-- Demo Start -->
+            <section id="demo-start" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">开始演示 (Demo Start)</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">操作步骤：</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-600">
+                            <li>打开 IntelliJ IDEA</li>
+                            <li><code>File → Open →</code> 选择项目文件夹</li>
+                            <li>展开 <code>src</code> 文件夹, 显示所有 Java 文件</li>
+                            <li>右键点击 <code>MusicPlaylistDriver.java</code></li>
+                            <li>选择 "Run 'MusicPlaylistDriver.main()'"</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">解说词 (Commentary):</h3>
+                        <div class="commentary-tabs" data-step="0">
+                            <div class="flex border-b mb-3">
+                                <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                                <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                            </div>
+                            <div class="text-gray-600 text-sm space-y-2">
+                                <p data-lang="zh">大家好，这是我的音乐播放列表管理器项目。让我来演示一下。首先，我打开IntelliJ IDEA，打开我的项目。可以看到我有5个主要的Java类文件。现在我运行主程序MusicPlaylistDriver...</p>
+                                <p data-lang="en" class="hidden">Hello everyone, this is my Music Playlist Manager project. Let me demonstrate it. First, I open IntelliJ IDEA and load my project. You can see I have 5 main Java class files. Now I'll run the main program MusicPlaylistDriver...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 1: Main Menu -->
+            <section id="step-1" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">第一步：展示主菜单 (Step 1: Main Menu)</h2>
+                 <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">程序输出：</h3>
+                        <div class="terminal">
+                            <pre><span class="terminal-yellow">Welcome to the Music Playlist Manager!
+    ===== Main Menu =====
+    1. Create a Playlist
+    2. Browse Playlist
+    3. Display all Playlists
+    4. Remove Playlist(s)
+    5. Search Playlist by Name
+    6. Quit
+    =====================</span>
+
+❓What do you want to do?</pre>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">解说词 (Commentary):</h3>
+                        <div class="commentary-tabs" data-step="1">
+                             <div class="flex border-b mb-3">
+                                <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                                <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                            </div>
+                             <div class="text-gray-600 text-sm space-y-2">
+                                <p data-lang="zh">程序启动了，这是我的主菜单。我设计了6个主要功能：创建播放列表、浏览播放列表、显示所有播放列表、删除播放列表、搜索播放列表和退出。我使用了彩色文本来提高用户体验，黄色表示菜单选项。</p>
+                                <p data-lang="en" class="hidden">The program has started, this is my main menu. I designed 6 main functions: create playlist, browse playlist, display all playlists, remove playlist, search playlist, and quit. I used colored text to improve user experience - yellow indicates menu options.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Step 2: Create Playlist -->
+            <section id="step-2" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">第二步：创建播放列表 (Step 2: Create Playlist)</h2>
+                 <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">交互流程：</h3>
+                        <div class="terminal space-y-3">
+                            <div><span class="text-slate-400">操作：在终端输入 </span> <div class="user-input">1</div></div>
+                            <pre>📃 Creating a playlist ... but we need some info from you.
+❓ What should we name the playlist?</pre>
+                            <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">Study Music</div></div>
+                            <pre>Select mood for playlist:
+1. Study
+2. Relax
+3. Party
+4. Sad
+Enter your choice (1-4):</pre>
+                             <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">1</div></div>
+                            <pre><span class="terminal-green">✅ Playlist Name: Study Music [Mood: STUDY] (0 songs, Total Duration: 00:00 mins) was created.</span></pre>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">解说词 (Commentary):</h3>
+                        <div class="commentary-tabs" data-step="2">
+                             <div class="flex border-b mb-3">
+                                <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                                <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                            </div>
+                             <div class="text-gray-600 text-sm space-y-2">
+                                <p data-lang="zh">现在我选择1来创建一个新的播放列表。我输入播放列表名称'Study Music'。这是我为HD任务添加的新功能 - 心情选择。我设计了4种心情：Study, Relax, Party, Sad。我选择1代表Study心情。可以看到播放列表创建成功了，显示了名称、心情、歌曲数量和总时长。</p>
+                                <p data-lang="en" class="hidden">Now I select 1 to create a new playlist. I enter the playlist name 'Study Music'. This is a new feature I added for the HD task - mood selection. I designed 4 moods: Study, Relax, Party, Sad. I choose 1 for Study mood. You can see the playlist was created successfully, showing name, mood, song count and total duration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Add Songs -->
+            <section id="step-3" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                 <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">第三步：添加歌曲 (Step 3: Add Songs)</h2>
+                 <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">交互流程：</h3>
+                        <div class="terminal space-y-3">
+                            <pre>...回到主菜单...</pre>
+                            <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">2</div></div>
+                            <pre>Id 1. Playlist Name: Study Music [Mood: STUDY] (0 songs, Total Duration: 00:00 mins)
+
+❓Which playlist do you want to browse (enter the id number)?</pre>
+                             <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">1</div></div>
+                             <pre><span class="terminal-yellow">===== ⚙️ Browsing / Managing Playlist =====
+Playlist Name: Study Music [Mood: STUDY] (0 songs, Total Duration: 00:00 mins)
+1. Add a song
+...
+7. Back to Main Menu
+==========================================</span>
+❓What do you want to do?</pre>
+                             <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">1</div></div>
+                             <pre>❓ Name of the song?</pre>
+                             <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">Lofi Study Beat</div></div>
+                             <pre>❓ Artist of the song?</pre>
+                             <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">Chillhop Music</div></div>
+                             <pre>❓ Duration of the song (MM:SS format)?</pre>
+                             <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">03:30</div></div>
+                             <pre><span class="terminal-green">✅ Lofi Study Beat by Chillhop Music [03:30] was successfully added to the playlist.</span></pre>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">解说词 (Commentary):</h3>
+                        <div class="commentary-tabs" data-step="3">
+                             <div class="flex border-b mb-3">
+                                <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                                <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                            </div>
+                             <div class="text-gray-600 text-sm space-y-2">
+                                <p data-lang="zh">现在我选择2来浏览播放列表。可以看到我刚创建的播放列表显示出来了。我选择1进入播放列表管理界面。这里有7个子功能。我选择1添加歌曲。我需要输入歌曲名称、艺术家和时长。我实现了时长的格式转换 - 用户输入MM:SS格式，程序会自动转换为秒数存储。这首歌添加成功了。</p>
+                                <p data-lang="en" class="hidden">Now I select 2 to browse playlists. You can see my newly created playlist is displayed. I choose 1 to enter the playlist management interface. There are 7 sub-functions here. I select 1 to add a song. I need to enter song name, artist, and duration. I implemented duration format conversion - users input MM:SS format, and the program automatically converts to seconds for storage. This song was added successfully.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Step 4: Shuffle -->
+            <section id="step-4" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">第四步：展示洗牌播放功能 (Step 4: Shuffle Play)</h2>
+                 <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">交互流程：</h3>
+                        <div class="terminal space-y-3">
+                            <pre class="text-slate-400">...再添加几首歌曲...</pre>
+                            <pre><span class="terminal-green">✅ Focus Flow by Study Beats [04:15] was successfully added...</span>
+<span class="terminal-green">✅ Rain Sounds by Nature Audio [02:45] was successfully added...</span></pre>
+                            <pre class="text-slate-400">...在子菜单中...</pre>
+                            <div><span class="text-slate-400">操作：输入 </span> <div class="user-input">5</div></div>
+                            <pre><span class="terminal-green">▶️ Focus Flow by Study Beats [04:15]
+▶️ Rain Sounds by Nature Audio [02:45]
+▶️ Lofi Study Beat by Chillhop Music [03:30]</span></pre>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">解说词 (Commentary):</h3>
+                        <div class="commentary-tabs" data-step="4">
+                             <div class="flex border-b mb-3">
+                                <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                                <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                            </div>
+                             <div class="text-gray-600 text-sm space-y-2">
+                                <p data-lang="zh">让我添加几首更多的歌曲...好的，现在我有3首歌了。现在我来演示我实现的核心功能 - 洗牌播放。我选择5。这是我的shufflePlaySongs方法。可以看到歌曲以随机顺序播放，但原始播放列表的顺序没有改变。我的算法是：创建一个临时列表，然后随机选择歌曲并从临时列表中移除，直到全部选完。这样既实现了随机播放，又保持了原始顺序不变。</p>
+                                <p data-lang="en" class="hidden">Let me add a few more songs... OK, now I have 3 songs. Now I'll demonstrate my core implemented feature - shuffle play. I select 5. This is my shufflePlaySongs method. You can see the songs play in random order, but the original playlist order remains unchanged. My algorithm is: create a temporary list, then randomly select songs and remove them from the temp list until all are selected. This achieves random playback while preserving the original order.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Step 5: Statistics -->
+            <section id="step-5" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">第五步：统计功能演示 (Step 5: Statistics)</h2>
+                 <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">交互流程：</h3>
+                        <div class="terminal space-y-3">
+                            <pre class="text-slate-400">...返回主菜单，创建更多播放列表，多次浏览和播放歌曲以生成数据...</pre>
+                            <div><span class="text-slate-400">操作：在主菜单输入 </span> <div class="user-input">6</div></div>
+                            <pre><span class="terminal-yellow">
+===== User Preference Summary =====</span>
+Most browsed playlist: Study Music
+Most played song: Lofi Study Beat by Chillhop Music [03:30] (Played 2 times)
+Your preferred mood: STUDY
+<span class="terminal-yellow">===================================
+👋 Shutting down system.👋</span>
+Thank you for using the playlist manager.</pre>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-lg text-gray-700 mb-2">解说词 (Commentary):</h3>
+                        <div class="commentary-tabs" data-step="5">
+                             <div class="flex border-b mb-3">
+                                <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                                <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                            </div>
+                             <div class="text-gray-600 text-sm space-y-2">
+                                <p data-lang="zh">现在让我演示统计功能。我创建了第二个播放列表叫'Relaxing Evening'，心情选择Relax。然后我多次浏览不同的播放列表，播放一些歌曲来生成统计数据。当我选择6退出程序时，会显示用户偏好摘要。这是我实现的另一个核心功能。可以看到：最常浏览的播放列表是'Study Music'，最常播放的歌曲是'Lofi Study Beat'播放了2次，用户偏好的心情是STUDY。我的getMostFrequentMood方法使用数组索引来对应枚举值，简单有效。</p>
+                                <p data-lang="en" class="hidden">Now let me demonstrate the statistics feature. I created a second playlist called 'Relaxing Evening' with Relax mood. Then I browsed different playlists multiple times and played some songs to generate statistical data. When I select 6 to quit, it displays the user preference summary. This is another core feature I implemented. You can see: most browsed playlist is 'Study Music', most played song is 'Lofi Study Beat' played 2 times, and user's preferred mood is STUDY. My getMostFrequentMood method uses array indices to correspond to enum values - simple and effective.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Step 6: Code -->
+            <section id="step-6" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">第六步：代码解释 (Step 6: Code Explanation)</h2>
+                <div class="commentary-tabs" data-step="6">
+                     <div class="flex border-b mb-3">
+                        <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文解说</button>
+                        <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Commentary</button>
+                    </div>
+                    <div class="text-gray-600 text-sm space-y-4">
+                        <div data-lang="zh">
+                            <p class="mb-2">让我简单解释一下我的代码结构。我有5个主要类：</p>
+                            <ul class="list-disc list-inside space-y-1 mb-4">
+                                <li><b>MusicPlaylistDriver</b> - 程序入口点，只负责启动程序</li>
+                                <li><b>MenuController</b> - 控制用户界面和交互逻辑</li>
+                                <li><b>PlaylistManager</b> - 管理播放列表数组，实现增删查改和统计功能</li>
+                                <li><b>Playlist</b> - 播放列表类，包含歌曲列表和心情属性</li>
+                                <li><b>Song</b> - 歌曲类，存储歌曲信息和播放次数</li>
+                            </ul>
+                             <p>我特别想展示几个关键实现：</p>
+                        </div>
+                         <div data-lang="en" class="hidden">
+                            <p class="mb-2">Let me briefly explain my code structure. I have 5 main classes:</p>
+                             <ul class="list-disc list-inside space-y-1 mb-4">
+                                <li><b>MusicPlaylistDriver</b> - Program entry point, only responsible for starting the program</li>
+                                <li><b>MenuController</b> - Controls user interface and interaction logic</li>
+                                <li><b>PlaylistManager</b> - Manages playlist array, implements CRUD and statistics</li>
+                                <li><b>Playlist</b> - Playlist class containing song list and mood attribute</li>
+                                <li><b>Song</b> - Song class storing song information and play count</li>
+                            </ul>
+                             <p>I'd like to highlight a few key implementations:</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Shuffle 算法 (在 <code>Playlist.java</code>)</h4>
+                            <div class="text-sm text-gray-600 my-2">
+                                <p data-lang="zh">这种方法虽然不是最高效的，但逻辑清晰，易于理解。</p>
+                                <p data-lang="en" class="hidden">This approach isn't the most efficient, but the logic is clear and easy to understand.</p>
+                            </div>
+                            <div class="code-block">
+                                <pre><code><span class="keyword">public</span> <span class="class-name">Song</span>[] <span class="method-name">shufflePlaySongs</span>() {
+    <span class="comment">// 我创建临时列表，随机选择并移除</span>
+    <span class="class-name">ArrayList</span>&lt;<span class="class-name">Song</span>&gt; temp = <span class="keyword">new</span> <span class="class-name">ArrayList</span>&lt;&gt;(songs);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < result.length; i++) {
+        <span class="keyword">int</span> randomIndex = (<span class="keyword">int</span>)(<span class="class-name">Math</span>.random() * temp.size());
+        result[i] = temp.get(randomIndex);
+        temp.remove(randomIndex);
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700">心情统计 (在 <code>PlaylistManager.java</code>)</h4>
+                            <div class="text-sm text-gray-600 my-2">
+                                <p data-lang="zh">我使用数组索引对应枚举值，这是比较直观的学生思路。</p>
+                                <p data-lang="en" class="hidden">I use array indices corresponding to enum values - this is quite intuitive student thinking.</p>
+                            </div>
+                            <div class="code-block">
+                                <pre><code><span class="keyword">public</span> <span class="class-name">Playlist.Mood</span> <span class="method-name">getMostFrequentMood</span>() {
+    <span class="comment">// 使用一个简单的数组来计数</span>
+    <span class="keyword">int</span>[] moodCounters = <span class="keyword">new int</span>[4]; 
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < numberOfPlaylists; i++) {
+        <span class="comment">// ... 逻辑来增加 moodCounters 对应索引的值 ...</span>
+    }
+    
+    <span class="comment">// ... 找到最大值的索引并返回对应的 Mood ...</span>
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Conclusion -->
+            <section id="conclusion" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">结束语 (Conclusion)</h2>
+                 <div class="commentary-tabs" data-step="9">
+                     <div class="flex border-b mb-3">
+                        <button class="tab-button active py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="zh">中文总结</button>
+                        <button class="tab-button py-2 px-4 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-t-lg" data-lang="en">English Conclusion</button>
+                    </div>
+                     <div class="text-gray-600 text-sm space-y-4">
+                        <div data-lang="zh">
+                             <p class="mb-2">总结一下，我的程序实现了作业要求的所有功能：</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>播放列表的 shufflePlay 方法 - 随机播放不改变原序列</li>
+                                <li>最常浏览播放列表的追踪功能</li>
+                                <li>用户偏好摘要显示</li>
+                                <li>HD 要求的心情字段和相关功能</li>
+                                <li>完整的 Javadoc 注释</li>
+                            </ul>
+                            <p class="mt-3">我的代码遵循良好的OOP原则，模块化设计，易于维护。谢谢大家！</p>
+                        </div>
+                         <div data-lang="en" class="hidden">
+                             <p class="mb-2">In summary, my program implements all required features:</p>
+                             <ul class="list-disc list-inside space-y-1">
+                                <li>Playlist shufflePlay method - random play without changing original order</li>
+                                <li>Most browsed playlist tracking feature</li>
+                                <li>User preference summary display</li>
+                                <li>HD requirement mood field and related functionality</li>
+                                <li>Complete Javadoc comments</li>
+                            </ul>
+                            <p class="mt-3">My code follows good OOP principles with modular design and easy maintenance. Thank you everyone!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const commentaryContainers = document.querySelectorAll('.commentary-tabs');
+
+            commentaryContainers.forEach(container => {
+                const buttons = container.querySelectorAll('.tab-button');
+                const contents = container.querySelectorAll('[data-lang]');
+                
+                // Only add listeners if there are buttons in this container
+                if (buttons.length > 0) {
+                    buttons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const langToShow = button.dataset.lang;
+                            
+                            // Update button styles: Deactivate all, then activate the clicked one.
+                            buttons.forEach(btn => {
+                                btn.classList.remove('active');
+                            });
+                            button.classList.add('active');
+
+                            // Update content visibility in a single loop
+                            // FIX: Select only elements with data-lang that are NOT buttons
+                            const contents = container.querySelectorAll('[data-lang]:not(button)');
+                            contents.forEach(content => {
+                                if (content.dataset.lang === langToShow) {
+                                    content.classList.remove('hidden');
+                                } else {
+                                    content.classList.add('hidden');
+                                }
+                            });
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
